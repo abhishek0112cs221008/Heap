@@ -1,0 +1,29 @@
+
+class Solution {
+    // Function to merge K sorted linked list.
+    Node mergeKLists(List<Node> arr) {
+        PriorityQueue<Node> p = new PriorityQueue<>(
+            (a, b) -> a.data - b.data
+        );
+        
+        for(Node n : arr) {
+            if(n != null)
+                p.offer(n);
+        }
+        
+        Node temp = new Node(0);
+        Node tail = temp;
+        
+        while(!p.isEmpty()) {
+            Node curr = p.poll();
+            tail.next = curr;
+            tail = tail.next;
+            
+            if(curr.next != null) {
+                p.offer(curr.next);
+            }
+        }
+        
+        return temp.next;
+    }
+}
