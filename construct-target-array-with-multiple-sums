@@ -1,0 +1,28 @@
+class Solution {
+    public boolean isPossible(int[] target) {
+         // Max-heap
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        long total = 0;
+
+        for (int num : target) {
+            maxHeap.add(num);
+            total += num;
+        }
+
+        while (true) {
+            int largest = maxHeap.poll();
+            long rest = total - largest;
+
+            // Base cases
+            if (largest == 1 || rest == 1) return true;
+            if (rest == 0 || largest < rest) return false;
+
+            int updated = (int)(largest % rest);
+            if (updated == 0) return false;
+
+            // Push updated value back and update total
+            maxHeap.add(updated);
+            total = rest + updated;
+        }
+    }
+}
